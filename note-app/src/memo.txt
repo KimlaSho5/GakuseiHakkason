@@ -1,0 +1,9 @@
+参考演算子
+    className={selectedNote.id == note.id ? "selected": ""}
+    returnエリアでは{}に変数を入れる
+
+filter関数
+ notes配列をフィルターにかけ, 条件式にあったものだけを残す
+map関数
+e.target value
+→ユーザ
