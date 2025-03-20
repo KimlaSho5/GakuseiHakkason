@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Drawer, List, ListItem, ListItemText } from "@mui/material"
 
-export default function AppDrawer({ notes, onAddNote }){
+export default function AppDrawer({ notes, onAddNote, onSelectNote, selectedNote}){
 
     const drawerWidth = 360;
 
@@ -22,7 +22,7 @@ export default function AppDrawer({ notes, onAddNote }){
       </ListItem>
       { notes.map((note) => (
         <ListItem button key={note.id}>
-          <ListItemText primary={note.title} />
+          <ListItemText primary={note.title} onClick={() => onSelectNote(note)}/>
         </ListItem>
       ))}
     </List>

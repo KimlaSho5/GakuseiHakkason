@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 
-export default function AppHeader(){
+export default function AppHeader({status}){
   const drawerWidth = 360;
 
   return (
@@ -15,8 +15,11 @@ export default function AppHeader(){
     }}
     >
       <Toolbar>
-        <Typography variant="h6" noWrap>
-          MemoApp
+        <Typography variant="h7" sx={{
+          color:"gray",
+          textalign: "right"
+        }}>
+          {status}
         </Typography>
       </Toolbar>
     </AppBar>
