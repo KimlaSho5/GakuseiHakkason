@@ -44,7 +44,7 @@ function App() {
 
   const handleSave = () => {
     const updatedNotes = notes.map((note) => {
-      if(note.id == selectedNote.id) {
+      if(note.id === selectedNote.id) {
         return {...note, text: editedText};
       }
       return note;
@@ -64,7 +64,7 @@ function App() {
           {notes.map((note) => (
             <li
               key={note.id}
-              className={selectedNote.id == note.id ? "selected": ""}>
+              className={selectedNote.id === note.id ? "selected": ""}>
               <button onClick ={() => handleDelete(note.id)} className="delete">削除</button>
               <span onClick={() => handleSelect(note)}>{note.text}</span>
             </li>
