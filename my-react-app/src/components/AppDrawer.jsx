@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Drawer, List, ListItem, ListItemText } from "@mui/material"
+import { Button, Drawer, List, ListItem, ListItemText, ListItemButton } from "@mui/material"
 
-export default function AppDrawer({ notes, onAddNote, onSelectNote, selectedNote}){
+export default function AppDrawer({ notes, onAddNote, onselectNote, selectedNote, onDeleteNote }){
 
     const drawerWidth = 360;
 
@@ -13,17 +13,31 @@ export default function AppDrawer({ notes, onAddNote, onSelectNote, selectedNote
     >
     <List>
       <ListItem>
-        <Button 
+        <Button
+        color="inherit"
         variant="contained"
         onClick={onAddNote}
         >
-          Add Note
+          Add Origin
+        </Button>
+        <Button
+        color="inherit"
+        variant="contained"
+        onClick={() => onDeleteNote(selectedNote?.id)}
+        >
+          Delete
         </Button>
       </ListItem>
-      { notes.map((note) => (
-        <ListItem button key={note.id}>
-          <ListItemText primary={note.title} onClick={() => onSelectNote(note)}/>
-        </ListItem>
+      {notes.map((note) => (
+        <ListItemButton
+          key={note.id}
+          onClick={() => onselectNote(note)}
+          sx={{
+            backgroundColor: note.id === selectedNote?.id ? "rgb(0,0,0,0.1)" : "transparent",
+            }}
+        >
+          <ListItemText primary={note.title} />
+        </ListItemButton>
       ))}
     </List>
     </Drawer>

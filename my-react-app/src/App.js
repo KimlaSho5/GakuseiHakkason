@@ -10,20 +10,23 @@ export default function App() {
   const[ Note, setNote ] = useState([]);
   const [ editedNote, setEditedNote ] =useState("");
   const[ Status, setStatus ] = useState("");
-  const[ selectedNote, setSelectedNote ] = useState("null");
+  const[ selectedNote, setSelectedNote ] = useState(null);
+  const [Title, setTitle] =useState("");
   
   useEffect(() => {
-    if(!editedNote)return;
+    if(!editedNote || editedNote == selectedNote?.text){
+      if(!Title || Title === selectedNote?.title )return;
+    }
     setStatus("Now Saving...")
     const timer = setTimeout(() => {
       saveNote(Note);
     }, 1000);
-  },[editedNote]);
+  },[editedNote, Title]);
 
   const saveNote = (notes) => {
     const updatedNotes = notes.map((note) => {
       if(note.id === selectedNote.id) {
-        return {...note, text: editedNote};
+        return {...note, text: editedNote, title: Title};
       }
       return note;
     });
@@ -35,17 +38,33 @@ export default function App() {
   const handleSelect = (note) => {
     setSelectedNote(note);
     setEditedNote(note.text);
+    setTitle(note.title);
   }
+
   //ノートの追加
   const handleNoteAdd = () => {
     const newNote = {
       id: uuid(),
-      title: "title",
+      title: "No name",
       text: "",
+      parent:null,
+      level:"0"
     };
     setNote([...Note, newNote]);
     setEditedNote(newNote.text);
+    setTitle(newNote.title);
     setSelectedNote(newNote);
+  }
+
+  //delete
+  const handleDelete = (noteID) => {
+    const filteredNote = Note.filter((note) => note.id !== noteID);
+    setNote(filteredNote);
+    if( filteredNote.length > 0 ){
+      handleSelect(filteredNote[ filteredNote.length-1 ] );
+    } else {
+      setSelectedNote(null);
+    }
   }
 
   return (
@@ -54,17 +73,17 @@ export default function App() {
 
       {/* ヘッダー */}
       <Box>
-        <AppHeader status={Status}/>
+        <AppHeader status={Status} selectedNote={selectedNote}/>
       </Box>
 
       {/* サイドバー */}
       <Box>
-        <AppDrawer notes={Note} onAddNote={handleNoteAdd} onSelectNote={handleSelect} selectNote={selectedNote}/>
+        <AppDrawer notes={Note} onAddNote={handleNoteAdd} onselectNote={handleSelect} selectedNote={selectedNote} onDeleteNote={handleDelete}/>
       </Box>
 
       {/* メインコンテンツ */}
       <Box component="main" sx={{ flexGrow: 1, p: 3, mt: "64px" }}>
-        <AppText editedNote={editedNote} setEditedNote={setEditedNote} selectedNote={selectedNote}/>
+        <AppText setNote={setNote} Note={Note} editedNote={editedNote} setEditedNote={setEditedNote} selectedNote={selectedNote} title={Title} setTitle={setTitle} handleAddNote={handleNoteAdd}/>
       </Box>
     </Box>
   );
