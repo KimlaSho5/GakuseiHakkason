@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography,Button } from "@mui/material";
 
-export default function AppHeader({status, selectedNote}){
+export default function AppHeader({status}){
   const drawerWidth = 360;
 
   return (
@@ -20,6 +20,13 @@ export default function AppHeader({status, selectedNote}){
         }}>
           {status}
         </Typography>
+        {/* <Button
+        color="inherit"
+        onClick={() => saveThoughts(Thoughts)}
+        variant="contained"
+        >
+          Save your thought
+        </Button> */}
       </Toolbar>
     </AppBar>
   );
